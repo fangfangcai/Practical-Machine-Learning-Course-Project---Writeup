@@ -67,6 +67,12 @@ img {
 </div>
 
 
+<div id="background" class="section level1">
+<h1>Background</h1>
+<p>Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, your goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. More information is available from the website here: <a href="http://groupware.les.inf.puc-rio.br/har" class="uri">http://groupware.les.inf.puc-rio.br/har</a> (see the section on the Weight Lifting Exercise Dataset).</p>
+<p>The data for this project come from this source: <a href="http://groupware.les.inf.puc-rio.br/har" class="uri">http://groupware.les.inf.puc-rio.br/har</a>.</p>
+<p>The goal of your project is to predict the manner in which they did the exercise.</p>
+</div>
 <div id="cleaning-the-data" class="section level1">
 <h1>Cleaning the data</h1>
 <p>Reading the Training set and the Test set:</p>
@@ -84,6 +90,7 @@ TestFinal&lt;-testing[,names(TrainingFinal[,-52])]</code></pre>
 <pre class="r"><code>inTraining&lt;-createDataPartition(y=TrainingFinal$classe, p=0.6,list=F)
 Trainingset&lt;-TrainingFinal[inTraining,] 
 testset&lt;-TrainingFinal[-inTraining,] </code></pre>
+<p>Using Random Forest to fit a model:</p>
 <pre class="r"><code>library(caret)
 set.seed(100)
 Control&lt;-trainControl(method=&quot;cv&quot;, number=5, allowParallel=T, verbose=T)
@@ -142,6 +149,7 @@ rffit&lt;-train(classe~.,data=Trainingset, method=&quot;rf&quot;, trControl=Cont
 ## C    0   15 2032    7    0 0.010710808
 ## D    0    0   20 1907    3 0.011917098
 ## E    0    0    3    8 2154 0.005080831</code></pre>
+<p>The accuracy of the model is also very high.</p>
 <p>Cross Validation to estimate the error:</p>
 <pre class="r"><code>prediction&lt;-predict(rffit, newdata=testset)
 confusionMatrix(prediction, testset$classe)</code></pre>
@@ -180,6 +188,7 @@ confusionMatrix(prediction, testset$classe)</code></pre>
 <pre class="r"><code>predict(rffit, newdata=TestFinal)</code></pre>
 <pre><code>##  [1] B A B A A E D B A A B C B A E E A B B B
 ## Levels: A B C D E</code></pre>
+<p>The model has correctly predicted all 20 of the test data.</p>
 </div>
 
 

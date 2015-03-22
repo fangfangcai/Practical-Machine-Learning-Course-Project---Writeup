@@ -5,6 +5,14 @@ date: "Sunday, March 22, 2015"
 output: html_document
 ---
 
+#Background
+
+Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, your goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. More information is available from the website here: http://groupware.les.inf.puc-rio.br/har (see the section on the Weight Lifting Exercise Dataset). 
+
+The data for this project come from this source: http://groupware.les.inf.puc-rio.br/har.
+
+The goal of your project is to predict the manner in which they did the exercise.
+
 #Cleaning the data
 
 Reading the Training set and the Test set:
@@ -28,6 +36,7 @@ Trainingset<-TrainingFinal[inTraining,]
 testset<-TrainingFinal[-inTraining,] 
 ```
 
+Using Random Forest to fit a model:
 ```{r}
 library(caret)
 set.seed(100)
@@ -40,6 +49,8 @@ We expect a low out of sample error:
 print(rffit$finalModel)
 ```
 
+The accuracy of the model is also very high.
+
 Cross Validation to estimate the error:
 ```{r}
 prediction<-predict(rffit, newdata=testset)
@@ -50,3 +61,5 @@ Predictions:
 ```{r}
 predict(rffit, newdata=TestFinal)
 ```
+
+The model has correctly predicted all 20 of the test data.
